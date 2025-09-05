@@ -278,8 +278,8 @@ const ProjectDetailPage = () => {
               <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
                 {!isConnected ? (
                   <div className="text-center">
-                    <h3 className="font-semibold text-black mb-2">Ready to Invest?</h3>
-                    <p className="text-sm text-gray-600 mb-4">Connect your wallet to invest in this project</p>
+                    {/* <h3 className="font-semibold text-black mb-2">Ready to Invest?</h3>
+                    <p className="text-sm text-gray-600 mb-4">Connect your wallet to invest in this project</p> */}
                   </div>
                 ) : !showInvestmentForm ? (
                   <div className="text-center">
