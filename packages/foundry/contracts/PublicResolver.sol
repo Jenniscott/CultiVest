@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.20;
+pragma solidity ^0.8.20;
 
 // This is an interface for the official ENS Public Resolver contract
 interface PublicResolver {
