@@ -1,71 +1,128 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
-import type { NextPage } from "next";
-import { useAccount } from "wagmi";
-import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { Address } from "~~/components/scaffold-eth";
 
-const Home: NextPage = () => {
-  const { address: connectedAddress } = useAccount();
+const Home = () => {
+  const [email, setEmail] = useState("");
+  const [selectedRole, setSelectedRole] = useState<"farmer" | "investor" | null>(null);
+
+  const handleLogin = () => {
+    if (selectedRole && email) {
+      window.location.href = `/${selectedRole}`;
+    }
+  };
 
   return (
-    <>
-      <div className="flex items-center flex-col grow pt-10">
-        <div className="px-5">
-          <h1 className="text-center">
-            <span className="block text-2xl mb-2">Welcome to</span>
-            <span className="block text-4xl font-bold">Scaffold-ETH 2</span>
-          </h1>
-          <div className="flex justify-center items-center space-x-2 flex-col">
-            <p className="my-2 font-medium">Connected Address:</p>
-            <Address address={connectedAddress} />
+    <div className="min-h-screen bg-white text-black">
+      {/* Header */}
+      <div className="border-b border-gray-200 px-4 py-4">
+        <div className="max-w-6xl mx-auto flex justify-between items-center">
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">🌱</span>
+            <span className="text-xl font-bold text-black">FarmLink</span>
+          </div>
+          <nav className="flex gap-6">
+            <Link href="/projects" className="text-gray-600 hover:text-black">
+              Projects
+            </Link>
+            <Link href="/farmer" className="text-gray-600 hover:text-black">
+              Farmer
+            </Link>
+            <Link href="/investor" className="text-gray-600 hover:text-black">
+              Investor
+            </Link>
+          </nav>
+        </div>
+      </div>
+
+      {/* Hero Section */}
+      <div className="max-w-6xl mx-auto px-4 py-16 text-center">
+        <h1 className="text-5xl font-bold mb-4 text-black">🌱 FarmLink</h1>
+        <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+          Agricultural Investment Platform - Connect vetted farmers with global investors for sustainable agricultural
+          projects.
+        </p>
+
+        {/* Login Form */}
+        <div className="max-w-md mx-auto bg-gray-50 p-8 rounded-lg">
+          <h2 className="text-2xl font-bold mb-6">Get Started</h2>
+
+          <div className="mb-4">
+            <input
+              type="email"
+              className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:border-black"
+              placeholder="Enter your email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+            />
           </div>
 
-          <p className="text-center text-lg">
-            Get started by editing{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              packages/nextjs/app/page.tsx
-            </code>
-          </p>
-          <p className="text-center text-lg">
-            Edit your smart contract{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              YourContract.sol
-            </code>{" "}
-            in{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              packages/hardhat/contracts
-            </code>
-          </p>
-        </div>
+          <div className="mb-6">
+            <p className="text-sm font-medium text-gray-700 mb-3">I am a:</p>
+            <div className="flex gap-4">
+              <button
+                className={`flex-1 px-4 py-3 rounded-md border ${
+                  selectedRole === "farmer" ? "bg-black text-white border-black" : "border-gray-300 hover:bg-gray-100"
+                }`}
+                onClick={() => setSelectedRole("farmer")}
+              >
+                Farmer
+              </button>
+              <button
+                className={`flex-1 px-4 py-3 rounded-md border ${
+                  selectedRole === "investor" ? "bg-black text-white border-black" : "border-gray-300 hover:bg-gray-100"
+                }`}
+                onClick={() => setSelectedRole("investor")}
+              >
+                Investor
+              </button>
+            </div>
+          </div>
 
-        <div className="grow bg-base-300 w-full mt-16 px-8 py-12">
-          <div className="flex justify-center items-center gap-12 flex-col md:flex-row">
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <BugAntIcon className="h-8 w-8 fill-secondary" />
-              <p>
-                Tinker with your smart contract using the{" "}
-                <Link href="/debug" passHref className="link">
-                  Debug Contracts
-                </Link>{" "}
-                tab.
+          <button
+            onClick={handleLogin}
+            disabled={!email || !selectedRole}
+            className="w-full bg-black text-white py-3 px-4 rounded-md hover:bg-gray-800 disabled:bg-gray-300"
+          >
+            Continue
+          </button>
+        </div>
+      </div>
+
+      {/* How it Works */}
+      <div className="bg-gray-50 py-16">
+        <div className="max-w-6xl mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12">How FarmLink Works</h2>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="text-center">
+              <div className="text-4xl mb-4">🌱</div>
+              <h3 className="text-xl font-bold mb-2">1. Farmers Apply</h3>
+              <p className="text-gray-600">
+                Farmers submit project proposals with detailed plans and funding requirements
               </p>
             </div>
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <MagnifyingGlassIcon className="h-8 w-8 fill-secondary" />
-              <p>
-                Explore your local transactions with the{" "}
-                <Link href="/blockexplorer" passHref className="link">
-                  Block Explorer
-                </Link>{" "}
-                tab.
+
+            <div className="text-center">
+              <div className="text-4xl mb-4">🔍</div>
+              <h3 className="text-xl font-bold mb-2">2. Verification</h3>
+              <p className="text-gray-600">
+                Projects undergo vetting including farmer credentials and project viability
+              </p>
+            </div>
+
+            <div className="text-center">
+              <div className="text-4xl mb-4">💰</div>
+              <h3 className="text-xl font-bold mb-2">3. Investment</h3>
+              <p className="text-gray-600">
+                Verified projects receive funding and progress is tracked through milestones
               </p>
             </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
