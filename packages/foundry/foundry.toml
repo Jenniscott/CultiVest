@@ -1,4 +1,36 @@
 [profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+solc-version = "0.8.20"
+optimizer = true
+optimizer-runs = 200
+
+# Add the Base network details here.
+# Use environment variables for your RPC URL and API keys for security.
+[rpc_endpoints]
+base_mainnet = "${RPC_BASE_MAINNET}"
+base_sepolia = "${RPC_BASE_SEPOLIA}"
+
+# Etherscan configuration for contract verification
+[etherscan]
+base_mainnet = { key = "${BASESCAN_API_KEY}", chain_id = 8453 }
+base_sepolia = { key = "${BASESCAN_API_KEY}", chain_id = 84532 }
+
+# The "url" field is a custom property for Etherscan to correctly
+# identify the block explorer for a given network.
+[etherscan.base_mainnet]
+url = "[https://api.basescan.org/api](https://api.basescan.org/api)"
+
+[etherscan.base_sepolia]
+url = "[https://api-sepolia.basescan.org/api](https://api-sepolia.basescan.org/api)"
+
+
+
+
+
+
+[profile.default]
 src = 'contracts'
 out = 'out'
 libs = ['lib', 'node_modules']
