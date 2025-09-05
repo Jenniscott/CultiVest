@@ -340,7 +340,7 @@ const ProjectsPage = () => {
         )}
 
         {/* Call to Action */}
-        {!isConnected && (
+        {/* {!isConnected && (
           <div className="bg-gray-50 border border-gray-200 rounded-lg p-8 mt-12 text-center">
             <h3 className="text-xl font-bold text-black mb-2">Ready to Start Investing?</h3>
             <p className="text-gray-600 mb-4">
@@ -348,7 +348,7 @@ const ProjectsPage = () => {
             </p>
             <div className="text-sm text-gray-500">Connect your wallet using the button in the top right corner</div>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

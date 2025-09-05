@@ -7,7 +7,7 @@ import { DocumentTextIcon, MapPinIcon, PhotoIcon, UserIcon } from "@heroicons/re
 import { useRouter } from "~~/hooks/mockHooks";
 
 const FarmerVerification = () => {
-  const isConnected = true;
+  // const isConnected = true;
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -65,16 +65,16 @@ const FarmerVerification = () => {
     }
   };
 
-  if (!isConnected) {
-    return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-black mb-4">Connect Your Wallet</h1>
-          <p className="text-gray-600">Please connect your wallet to access farmer verification</p>
-        </div>
-      </div>
-    );
-  }
+  // if (!isConnected) {
+  //   return (
+  //     <div className="min-h-screen bg-white flex items-center justify-center">
+  //       <div className="text-center">
+  //         <h1 className="text-2xl font-bold text-black mb-4">Connect Your Wallet</h1>
+  //         <p className="text-gray-600">Please connect your wallet to access farmer verification</p>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="min-h-screen bg-white text-black">
