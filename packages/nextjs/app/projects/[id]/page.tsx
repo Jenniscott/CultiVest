@@ -49,45 +49,45 @@ const ProjectDetailPage = () => {
   const [isInvesting, setIsInvesting] = useState(false);
   const [showInvestmentForm, setShowInvestmentForm] = useState(false);
 
-  // Mock project data - in real app, fetch based on ID
+  // Mock project data - in real app, fetch based on ID - realistic short-term farming project
   const project: Project = {
     id: id as string,
-    title: "Organic Maize Farming - Season 2024",
+    title: "Short-Season Maize Cultivation (120 Days)",
     description:
-      "This comprehensive farming project focuses on growing organic maize using sustainable and environmentally friendly practices in the fertile lands of Ashanti Region, Ghana. Our approach combines traditional farming wisdom with modern agricultural techniques to maximize yield while preserving soil health and biodiversity. The project includes land preparation, organic seed selection, natural pest control methods, and sustainable irrigation systems. We are committed to producing high-quality organic maize that meets international standards while supporting local food security and creating employment opportunities in rural communities.",
+      "This fast-track maize farming project focuses on cultivating high-yield, early-maturing maize varieties in the fertile soils of Ashanti Region, Ghana. The project spans exactly 4 months from planting to harvest, using hybrid seeds that mature in 120 days. Our approach combines modern agricultural techniques with sustainable practices to achieve a target yield of 5 tons per hectare. The project includes land preparation, hybrid seed procurement, organic fertilizer application, pest management, and harvest operations. We have secured purchase agreements with local grain traders and food processors, ensuring immediate market access upon harvest completion.",
     farmer: "0x1234...5678",
-    farmerENS: "kwame.farmlink.eth",
-    goal: 5000,
-    raised: 3200,
-    investorCount: 12,
-    deadline: "2024-02-15",
-    seasonStartDate: "2024-01-15",
+    farmerENS: "kwame.CultiVest.eth",
+    goal: 3500,
+    raised: 2800,
+    investorCount: 14,
+    deadline: "2025-12-15",
+    seasonStartDate: "2025-09-15",
     status: "funding",
     category: "maize",
     location: "Ashanti Region, Ghana",
     milestones: [
       {
         id: 1,
-        description: "Land preparation and seed planting",
-        percentage: 25,
+        description: "Land preparation and hybrid seed planting (Days 1-21)",
+        percentage: 30,
         status: "pending",
       },
       {
         id: 2,
-        description: "Mid-season care and maintenance",
+        description: "Mid-season fertilizer application and pest control (Days 22-70)",
         percentage: 35,
         status: "pending",
       },
       {
         id: 3,
-        description: "Harvest and initial processing",
+        description: "Harvest operations and drying (Days 71-120)",
         percentage: 25,
         status: "pending",
       },
       {
         id: 4,
-        description: "Final processing and sales",
-        percentage: 15,
+        description: "Marketing and sales to guaranteed buyers",
+        percentage: 10,
         status: "pending",
       },
     ],
@@ -340,13 +340,10 @@ const ProjectDetailPage = () => {
                   <span className="text-gray-600 block">Project ID</span>
                   <span className="font-mono text-black">{project.id}</span>
                 </div>
-                <div>
-                  <span className="text-gray-600 block">Farmer Address</span>
-                  <span className="font-mono text-black text-xs">{project.farmer}</span>
-                </div>
+
                 <div>
                   <span className="text-gray-600 block">Expected ROI</span>
-                  <span className="text-green-600 font-medium">12-18% annually</span>
+                  <span className="text-green-600 font-medium">12-18% </span>
                 </div>
                 <div>
                   <span className="text-gray-600 block">Risk Level</span>

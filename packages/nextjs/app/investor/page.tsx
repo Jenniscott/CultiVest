@@ -20,17 +20,17 @@ interface InvestmentProject {
 }
 
 const InvestorDashboard = () => {
-  // Mock data for available projects
+  // Mock data for available projects - realistic 3-6 month farm projects
   const [availableProjects] = useState<InvestmentProject[]>([
     {
       id: "1",
-      title: "Organic Maize Farming - Season 2024",
-      description: "Growing organic maize using sustainable farming practices in Ashanti Region, Ghana",
+      title: "Short-Season Maize Cultivation (120 Days)",
+      description: "Fast-growing maize variety cultivation for a complete 4-month cycle targeting 5 tons/hectare yield",
       farmer: "Kwame Asante",
-      goal: 5000,
-      raised: 3200,
-      investorCount: 12,
-      deadline: "2024-02-15",
+      goal: 3500,
+      raised: 2800,
+      investorCount: 14,
+      deadline: "2025-12-15",
       milestones: 4,
       completedMilestones: 0,
       status: "funding",
@@ -39,29 +39,59 @@ const InvestorDashboard = () => {
     },
     {
       id: "2",
-      title: "Cocoa Plantation Expansion",
-      description: "Expanding cocoa plantation to increase yield and implement new farming techniques",
+      title: "Dry Season Tomato Production (90 Days)",
+      description: "High-value tomato farming during dry season using drip irrigation for premium market prices",
       farmer: "Ama Osei",
-      goal: 8000,
-      raised: 8000,
-      investorCount: 24,
-      deadline: "2024-01-20",
-      milestones: 5,
-      completedMilestones: 2,
+      goal: 4200,
+      raised: 4200,
+      investorCount: 18,
+      deadline: "2025-11-30",
+      milestones: 3,
+      completedMilestones: 1,
       status: "in-progress",
-      myInvestment: 500,
-      estimatedReturn: 625,
+      myInvestment: 600,
+      estimatedReturn: 780,
     },
     {
       id: "3",
-      title: "Cassava Processing Unit",
-      description: "Setting up modern processing facility for value addition",
-      farmer: "Joseph Amponsah",
-      goal: 12000,
-      raised: 4500,
-      investorCount: 8,
-      deadline: "2024-03-10",
-      milestones: 6,
+      title: "Leafy Greens Hydroponics (60 Days)",
+      description: "Quick-cycle leafy vegetables using hydroponic systems targeting urban restaurants",
+      farmer: "Kofi Mensah",
+      goal: 2800,
+      raised: 1500,
+      investorCount: 9,
+      deadline: "2025-11-20",
+      milestones: 3,
+      completedMilestones: 0,
+      status: "funding",
+      myInvestment: 0,
+      estimatedReturn: 0,
+    },
+    {
+      id: "4",
+      title: "Sweet Potato Fast Track (100 Days)",
+      description: "Early-maturing sweet potato varieties for quick market entry with guaranteed buyers",
+      farmer: "Akua Boateng",
+      goal: 3200,
+      raised: 1800,
+      investorCount: 11,
+      deadline: "2025-12-10",
+      milestones: 4,
+      completedMilestones: 0,
+      status: "funding",
+      myInvestment: 400,
+      estimatedReturn: 520,
+    },
+    {
+      id: "5",
+      title: "Mushroom Production Cycle (75 Days)",
+      description: "Oyster mushroom cultivation in controlled environment with restaurant demand",
+      farmer: "Yaw Appiah",
+      goal: 2500,
+      raised: 900,
+      investorCount: 6,
+      deadline: "2025-11-25",
+      milestones: 3,
       completedMilestones: 0,
       status: "funding",
       myInvestment: 0,
@@ -82,7 +112,7 @@ const InvestorDashboard = () => {
         <div className="max-w-6xl mx-auto flex justify-between items-center">
           <Link href="/" className="flex items-center gap-3">
             <span className="text-2xl">🌱</span>
-            <span className="text-xl font-bold">FarmLink</span>
+            <span className="text-xl font-bold">CultiVest</span>
           </Link>
           <nav className="flex gap-6">
             <Link href="/projects" className="text-gray-600 hover:text-black">

@@ -2,7 +2,7 @@ import "~~/styles/globals.css";
 import { getMetadata } from "~~/utils/scaffold-eth/getMetadata";
 
 export const metadata = getMetadata({
-  title: "FarmLink - Agricultural Investment Platform",
+  title: "CultiVest - Agricultural Investment Platform",
   description: "Connect vetted farmers with global investors for sustainable agricultural projects",
 });
 

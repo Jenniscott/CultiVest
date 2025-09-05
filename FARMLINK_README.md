@@ -1,7 +1,7 @@
-# FarmLink - Decentralized Agricultural Financing Platform
+# CultiVest - Decentralized Agricultural Financing Platform
 
 ## Overview
-FarmLink is a decentralized platform built on the Base network that connects vetted farmers with global investors. The platform abstracts away blockchain complexity and provides a seamless user experience for both farmers seeking funding and investors looking to support sustainable agriculture.
+CultiVest is a decentralized platform built on the Base network that connects vetted farmers with global investors. The platform abstracts away blockchain complexity and provides a seamless user experience for both farmers seeking funding and investors looking to support sustainable agriculture.
 
 ## Features Implemented
 
@@ -144,7 +144,7 @@ packages/nextjs/
 ├── hooks/
 │   └── mockHooks.ts                 # Development mocks
 ├── types/
-│   └── farmlink.ts                  # TypeScript definitions
+│   └── CultiVest.ts                  # TypeScript definitions
 └── styles/
     └── globals.css                  # Global styles
 ```

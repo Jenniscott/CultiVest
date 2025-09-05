@@ -15,7 +15,12 @@ const FarmerVerification = () => {
     fullName: "",
     farmLocation: "",
     bio: "",
-    document: null as File | null,
+    governmentId: null as File | null,
+    landDocument: null as File | null,
+    farmPhotos: null as File | null,
+    businessRegistration: null as File | null,
+    agriculturalCertificate: null as File | null,
+    bankStatement: null as File | null,
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -26,11 +31,11 @@ const FarmerVerification = () => {
     }));
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (fieldName: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
     setFormData(prev => ({
       ...prev,
-      document: file,
+      [fieldName]: file,
     }));
   };
 
@@ -81,12 +86,24 @@ const FarmerVerification = () => {
 
         <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 mb-8">
           <h2 className="text-xl font-semibold text-black mb-4">Required Documents</h2>
-          <ul className="space-y-2 text-sm text-gray-600">
-            <li>• Government-issued ID (Passport, National ID, or Driver&apos;s License)</li>
-            <li>• Land ownership certificate or lease agreement</li>
-            <li>• Recent farming photos or certificates</li>
-            <li>• Business registration (if applicable)</li>
-          </ul>
+          <div className="grid md:grid-cols-2 gap-4 text-sm text-gray-600">
+            <div>
+              <h3 className="font-medium text-gray-800 mb-2">📋 Essential Documents</h3>
+              <ul className="space-y-1">
+                <li>• Government-issued ID (Required)</li>
+                <li>• Land ownership/lease document (Required)</li>
+                <li>• Recent farm photos (Required)</li>
+                <li>• Bank statement (last 6 months) (Required)</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-medium text-gray-800 mb-2">📄 Additional Documents</h3>
+              <ul className="space-y-1">
+                <li>• Business/cooperative registration</li>
+                <li>• Agricultural certificates/training</li>
+              </ul>
+            </div>
+          </div>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -144,30 +161,30 @@ const FarmerVerification = () => {
           </div>
 
           <div>
-            <label htmlFor="document" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="governmentId" className="block text-sm font-medium text-gray-700 mb-2">
               <PhotoIcon className="h-4 w-4 inline mr-2" />
-              Verification Document
+              Government ID (Required) *
             </label>
-            <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-gray-400 transition-colors">
+            <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-gray-400 transition-colors">
               <input
                 type="file"
-                id="document"
-                name="document"
+                id="governmentId"
+                name="governmentId"
                 required
-                onChange={handleFileChange}
+                onChange={handleFileChange("governmentId")}
                 accept=".pdf,.jpg,.jpeg,.png"
                 className="hidden"
               />
-              <label htmlFor="document" className="cursor-pointer flex flex-col items-center">
-                <PhotoIcon className="h-12 w-12 text-gray-400 mb-4" />
-                {formData.document ? (
+              <label htmlFor="governmentId" className="cursor-pointer flex flex-col items-center">
+                <PhotoIcon className="h-8 w-8 text-gray-400 mb-2" />
+                {formData.governmentId ? (
                   <div>
-                    <p className="text-sm font-medium text-black">{formData.document.name}</p>
+                    <p className="text-sm font-medium text-black">{formData.governmentId.name}</p>
                     <p className="text-xs text-gray-500">Click to change file</p>
                   </div>
                 ) : (
                   <div>
-                    <p className="text-sm font-medium text-gray-900">Click to upload document</p>
+                    <p className="text-sm font-medium text-gray-900">Upload Government ID</p>
                     <p className="text-xs text-gray-500">PDF, JPG, PNG up to 10MB</p>
                   </div>
                 )}
@@ -175,13 +192,177 @@ const FarmerVerification = () => {
             </div>
           </div>
 
+          <div>
+            <label htmlFor="landDocument" className="block text-sm font-medium text-gray-700 mb-2">
+              <DocumentTextIcon className="h-4 w-4 inline mr-2" />
+              Land Ownership/Lease Document (Required) *
+            </label>
+            <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-gray-400 transition-colors">
+              <input
+                type="file"
+                id="landDocument"
+                name="landDocument"
+                required
+                onChange={handleFileChange("landDocument")}
+                accept=".pdf,.jpg,.jpeg,.png"
+                className="hidden"
+              />
+              <label htmlFor="landDocument" className="cursor-pointer flex flex-col items-center">
+                <DocumentTextIcon className="h-8 w-8 text-gray-400 mb-2" />
+                {formData.landDocument ? (
+                  <div>
+                    <p className="text-sm font-medium text-black">{formData.landDocument.name}</p>
+                    <p className="text-xs text-gray-500">Click to change file</p>
+                  </div>
+                ) : (
+                  <div>
+                    <p className="text-sm font-medium text-gray-900">Upload Land Document</p>
+                    <p className="text-xs text-gray-500">Certificate, lease agreement, etc.</p>
+                  </div>
+                )}
+              </label>
+            </div>
+          </div>
+
+          <div>
+            <label htmlFor="farmPhotos" className="block text-sm font-medium text-gray-700 mb-2">
+              <PhotoIcon className="h-4 w-4 inline mr-2" />
+              Recent Farm Photos (Required) *
+            </label>
+            <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-gray-400 transition-colors">
+              <input
+                type="file"
+                id="farmPhotos"
+                name="farmPhotos"
+                required
+                onChange={handleFileChange("farmPhotos")}
+                accept=".jpg,.jpeg,.png"
+                multiple
+                className="hidden"
+              />
+              <label htmlFor="farmPhotos" className="cursor-pointer flex flex-col items-center">
+                <PhotoIcon className="h-8 w-8 text-gray-400 mb-2" />
+                {formData.farmPhotos ? (
+                  <div>
+                    <p className="text-sm font-medium text-black">{formData.farmPhotos.name}</p>
+                    <p className="text-xs text-gray-500">Click to change file</p>
+                  </div>
+                ) : (
+                  <div>
+                    <p className="text-sm font-medium text-gray-900">Upload Farm Photos</p>
+                    <p className="text-xs text-gray-500">Multiple photos of your farm, crops, equipment</p>
+                  </div>
+                )}
+              </label>
+            </div>
+          </div>
+
+          <div>
+            <label htmlFor="bankStatement" className="block text-sm font-medium text-gray-700 mb-2">
+              <DocumentTextIcon className="h-4 w-4 inline mr-2" />
+              Bank Statement (last 6 months) (Required) *
+            </label>
+            <div className="border-2 border-dashed border-gray-200 rounded-lg p-4 text-center hover:border-gray-300 transition-colors">
+              <input
+                type="file"
+                id="bankStatement"
+                name="bankStatement"
+                onChange={handleFileChange("bankStatement")}
+                accept=".pdf"
+                className="hidden"
+              />
+              <label htmlFor="bankStatement" className="cursor-pointer flex flex-col items-center">
+                <DocumentTextIcon className="h-6 w-6 text-gray-400 mb-2" />
+                {formData.bankStatement ? (
+                  <div>
+                    <p className="text-sm font-medium text-black">{formData.bankStatement.name}</p>
+                    <p className="text-xs text-gray-500">Click to change file</p>
+                  </div>
+                ) : (
+                  <div>
+                    <p className="text-sm text-gray-700">Upload Bank Statement</p>
+                    <p className="text-xs text-gray-500">Helps verify financial stability (PDF only)</p>
+                  </div>
+                )}
+              </label>
+            </div>
+          </div>
+
+          <div className="border-t border-gray-200 pt-6">
+            <h3 className="text-lg font-medium text-gray-900 mb-4">📄 Additional Documents (Optional)</h3>
+            <div className="space-y-4">
+              <div>
+                <label htmlFor="businessRegistration" className="block text-sm font-medium text-gray-700 mb-2">
+                  <DocumentTextIcon className="h-4 w-4 inline mr-2" />
+                  Business/Cooperative Registration
+                </label>
+                <div className="border-2 border-dashed border-gray-200 rounded-lg p-4 text-center hover:border-gray-300 transition-colors">
+                  <input
+                    type="file"
+                    id="businessRegistration"
+                    name="businessRegistration"
+                    onChange={handleFileChange("businessRegistration")}
+                    accept=".pdf,.jpg,.jpeg,.png"
+                    className="hidden"
+                  />
+                  <label htmlFor="businessRegistration" className="cursor-pointer flex flex-col items-center">
+                    <DocumentTextIcon className="h-6 w-6 text-gray-400 mb-2" />
+                    {formData.businessRegistration ? (
+                      <div>
+                        <p className="text-sm font-medium text-black">{formData.businessRegistration.name}</p>
+                        <p className="text-xs text-gray-500">Click to change file</p>
+                      </div>
+                    ) : (
+                      <div>
+                        <p className="text-sm text-gray-700">Upload Business Registration</p>
+                        <p className="text-xs text-gray-500">If you have a registered farming business</p>
+                      </div>
+                    )}
+                  </label>
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="agriculturalCertificate" className="block text-sm font-medium text-gray-700 mb-2">
+                  <DocumentTextIcon className="h-4 w-4 inline mr-2" />
+                  Agricultural Certificates/Training
+                </label>
+                <div className="border-2 border-dashed border-gray-200 rounded-lg p-4 text-center hover:border-gray-300 transition-colors">
+                  <input
+                    type="file"
+                    id="agriculturalCertificate"
+                    name="agriculturalCertificate"
+                    onChange={handleFileChange("agriculturalCertificate")}
+                    accept=".pdf,.jpg,.jpeg,.png"
+                    className="hidden"
+                  />
+                  <label htmlFor="agriculturalCertificate" className="cursor-pointer flex flex-col items-center">
+                    <DocumentTextIcon className="h-6 w-6 text-gray-400 mb-2" />
+                    {formData.agriculturalCertificate ? (
+                      <div>
+                        <p className="text-sm font-medium text-black">{formData.agriculturalCertificate.name}</p>
+                        <p className="text-xs text-gray-500">Click to change file</p>
+                      </div>
+                    ) : (
+                      <div>
+                        <p className="text-sm text-gray-700">Upload Agricultural Certificates</p>
+                        <p className="text-xs text-gray-500">Training certificates, organic certifications, etc.</p>
+                      </div>
+                    )}
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-            <h3 className="text-sm font-medium text-yellow-800 mb-2">Verification Process</h3>
+            <h3 className="text-sm font-medium text-yellow-800 mb-2">Enhanced Verification Process</h3>
             <ul className="text-sm text-yellow-700 space-y-1">
-              <li>1. Submit your documents and information</li>
-              <li>2. Our team reviews your application (typically 2-3 business days)</li>
-              <li>3. Once approved, you&apos;ll receive an ENS subdomain ([yourname].farmlink.eth)</li>
-              <li>4. You can then create farming projects and access funding</li>
+              <li>1. Submit all required documents and information</li>
+              <li>2. Our agricultural experts review your application (2-3 business days)</li>
+              <li>3. Additional verification may be required for larger projects</li>
+              <li>4. Once approved, you receive verified farmer status</li>
+              <li>5. Create and manage quick-cycle farming projects (60-120 days)</li>
             </ul>
           </div>
 

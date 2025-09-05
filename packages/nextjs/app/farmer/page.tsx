@@ -18,29 +18,29 @@ const FarmerDashboard = () => {
   // Mock user verification status - in real app this would come from backend
   const [vettingStatus, setVettingStatus] = useState<"none" | "pending" | "approved">("none");
 
-  // Mock data - only show projects if farmer is verified
+  // Mock data - only show projects if farmer is verified - realistic 3-6 month projects
   const [projects] = useState<FarmerProject[]>(
     vettingStatus === "approved"
       ? [
           {
             id: "1",
-            title: "Organic Maize Farming - Season 2024",
-            description: "Growing organic maize using sustainable farming practices",
-            goal: 5000,
-            raised: 3200,
+            title: "Short-Season Maize Cultivation (120 Days)",
+            description: "Fast-growing maize variety cultivation for a complete 4-month cycle",
+            goal: 3500,
+            raised: 2800,
             status: "funding",
             milestones: 4,
             completedMilestones: 0,
           },
           {
             id: "2",
-            title: "Cocoa Plantation Expansion",
-            description: "Expanding cocoa plantation to increase yield",
-            goal: 8000,
-            raised: 8000,
+            title: "Dry Season Tomato Production (90 Days)",
+            description: "High-value tomato farming during dry season using drip irrigation",
+            goal: 4200,
+            raised: 4200,
             status: "in-progress",
-            milestones: 5,
-            completedMilestones: 2,
+            milestones: 3,
+            completedMilestones: 1,
           },
         ]
       : [],
@@ -79,7 +79,7 @@ const FarmerDashboard = () => {
         <div className="max-w-6xl mx-auto flex justify-between items-center">
           <Link href="/" className="flex items-center gap-3">
             <span className="text-2xl">🌱</span>
-            <span className="text-xl font-bold">FarmLink</span>
+            <span className="text-xl font-bold">CultiVest</span>
           </Link>
           <nav className="flex gap-6">
             <Link href="/projects" className="text-gray-600 hover:text-black">
@@ -99,7 +99,7 @@ const FarmerDashboard = () => {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-black mb-2">Farmer Dashboard</h1>
-          <p className="text-gray-600">Welcome back! Manage your projects and track your progress.</p>
+          <p className="text-gray-600">Hello, please complete your verification to view your projects.</p>
         </div>
 
         {/* Verification Status */}

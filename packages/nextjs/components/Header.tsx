@@ -50,7 +50,7 @@ export const Header = () => {
                 <span className="text-2xl">🌱</span>
               </div>
               <div className="flex flex-col">
-                <span className="font-bold leading-tight text-xl">FarmLink</span>
+                <span className="font-bold leading-tight text-xl">CultiVest</span>
                 <span className="text-xs text-gray-600">Agricultural Investment Platform</span>
               </div>
             </Link>

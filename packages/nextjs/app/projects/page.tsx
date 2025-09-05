@@ -17,7 +17,7 @@ interface Project {
   investorCount: number;
   deadline: string;
   status: "funding" | "in-progress" | "completed";
-  category: "maize" | "cocoa" | "rice" | "vegetables" | "other";
+  category: "maize" | "cocoa" | "rice" | "vegetables" | "tubers" | "other";
   location: string;
 }
 
@@ -27,67 +27,97 @@ const ProjectsPage = () => {
   const [selectedFilter, setSelectedFilter] = useState<"all" | "funding" | "in-progress">("all");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
-  // Mock project data
+  // Mock project data - realistic 3-6 month farm projects
   const [projects] = useState<Project[]>([
     {
       id: "1",
-      title: "Organic Maize Farming - Season 2024",
+      title: "Short-Season Maize Cultivation (120 Days)",
       description:
-        "Growing organic maize using sustainable farming practices in Ashanti Region. This project focuses on implementing modern irrigation systems and organic fertilizers to increase yield while maintaining environmental sustainability.",
+        "Fast-growing maize variety cultivation for a complete 4-month cycle. Project includes land preparation, hybrid seed procurement, fertilizer application, and harvest. Expected yield of 5 tons per hectare with ready market guaranteed.",
       farmer: "0x1234...5678",
-      farmerENS: "kwame.farmlink.eth",
-      goal: 5000,
-      raised: 3200,
-      investorCount: 12,
-      deadline: "2024-02-15",
+      farmerENS: "kwame.CultiVest.eth",
+      goal: 3500,
+      raised: 2800,
+      investorCount: 14,
+      deadline: "2025-12-15",
       status: "funding",
       category: "maize",
       location: "Ashanti Region, Ghana",
     },
     {
       id: "2",
-      title: "Cocoa Plantation Expansion",
+      title: "Dry Season Tomato Production (90 Days)",
       description:
-        "Expanding existing cocoa plantation to increase yield and implement new farming techniques. The project includes purchasing new seedlings, improving soil quality, and implementing better post-harvest processing.",
+        "High-value tomato farming during dry season using drip irrigation. 3-month cycle from seedling to harvest targeting premium market prices. Includes greenhouse setup, irrigation system, and organic pest management.",
       farmer: "0x8765...4321",
-      farmerENS: "ama.farmlink.eth",
-      goal: 8000,
-      raised: 8000,
-      investorCount: 24,
-      deadline: "2024-01-20",
+      farmerENS: "ama.CultiVest.eth",
+      goal: 4200,
+      raised: 4200,
+      investorCount: 18,
+      deadline: "2025-11-30",
       status: "in-progress",
-      category: "cocoa",
+      category: "vegetables",
       location: "Western Region, Ghana",
     },
     {
       id: "3",
-      title: "Rice Cultivation Project",
+      title: "Leafy Greens Hydroponics (60 Days)",
       description:
-        "Large-scale rice cultivation using modern techniques and equipment. This project aims to supply local markets and reduce rice imports by increasing domestic production capacity.",
+        "Quick-cycle leafy vegetables (lettuce, spinach, kale) using hydroponic systems. 2-month harvest cycle with multiple rotations possible. Targeting urban restaurants and supermarkets with premium pricing.",
       farmer: "0x2468...1357",
-      farmerENS: "kofi.farmlink.eth",
-      goal: 12000,
-      raised: 4500,
-      investorCount: 8,
-      deadline: "2024-03-01",
-      status: "funding",
-      category: "rice",
-      location: "Northern Region, Ghana",
-    },
-    {
-      id: "4",
-      title: "Vegetable Greenhouse Initiative",
-      description:
-        "Setting up modern greenhouse facilities for year-round vegetable production. Focus on tomatoes, peppers, and leafy greens using hydroponic systems.",
-      farmer: "0x9753...8642",
-      farmerENS: "akua.farmlink.eth",
-      goal: 6500,
-      raised: 2100,
-      investorCount: 6,
-      deadline: "2024-02-28",
+      farmerENS: "kofi.CultiVest.eth",
+      goal: 2800,
+      raised: 1500,
+      investorCount: 9,
+      deadline: "2025-11-20",
       status: "funding",
       category: "vegetables",
       location: "Greater Accra, Ghana",
+    },
+    {
+      id: "4",
+      title: "Sweet Potato Fast Track (100 Days)",
+      description:
+        "Early-maturing sweet potato varieties for quick market entry. 3.5-month cycle including land prep, vine planting, care, and harvest. High demand from local markets and food processors.",
+      farmer: "0x9753...8642",
+      farmerENS: "akua.CultiVest.eth",
+      goal: 3200,
+      raised: 1800,
+      investorCount: 11,
+      deadline: "2025-12-10",
+      status: "funding",
+      category: "tubers",
+      location: "Eastern Region, Ghana",
+    },
+    {
+      id: "5",
+      title: "Mushroom Production Cycle (75 Days)",
+      description:
+        "Oyster mushroom cultivation in controlled environment. 2.5-month production cycle with substrate preparation, inoculation, and harvesting. High-value crop with consistent demand from restaurants.",
+      farmer: "0x5678...9012",
+      farmerENS: "yaw.CultiVest.eth",
+      goal: 2500,
+      raised: 900,
+      investorCount: 6,
+      deadline: "2025-11-25",
+      status: "funding",
+      category: "vegetables",
+      location: "Central Region, Ghana",
+    },
+    {
+      id: "6",
+      title: "Pepper & Chili Sprint (80 Days)",
+      description:
+        "Hot pepper and chili cultivation for spice market. Fast-growing varieties ready in under 3 months. Includes organic fertilizer program and direct buyer contracts with spice exporters.",
+      farmer: "0x3456...7890",
+      farmerENS: "abena.CultiVest.eth",
+      goal: 2200,
+      raised: 2200,
+      investorCount: 12,
+      deadline: "2025-11-15",
+      status: "completed",
+      category: "vegetables",
+      location: "Volta Region, Ghana",
     },
   ]);
 
@@ -112,7 +142,7 @@ const ProjectsPage = () => {
         <div className="max-w-6xl mx-auto flex justify-between items-center">
           <div className="flex items-center gap-3">
             <span className="text-2xl">🌱</span>
-            <span className="text-xl font-bold text-black">FarmLink</span>
+            <span className="text-xl font-bold text-black">CultiVest</span>
           </div>
           <nav className="flex gap-6">
             <Link href="/projects" className="text-gray-600 hover:text-black">

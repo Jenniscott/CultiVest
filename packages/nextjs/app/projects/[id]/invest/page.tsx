@@ -28,17 +28,17 @@ const InvestPage = () => {
   // Mock project data - in real app this would be fetched from API
   const project: ProjectData = {
     id: projectId,
-    title: "Organic Maize Farming - Season 2024",
+    title: "Short-Season Maize Cultivation (120 Days)",
     description:
-      "Growing organic maize using sustainable farming practices in Ashanti Region, Ghana. This project focuses on implementing modern organic farming techniques to increase yield while maintaining environmental sustainability.",
+      "Fast-growing maize variety cultivation for a complete 4-month cycle in Ashanti Region, Ghana. This quick-turnaround project uses hybrid seeds that mature in exactly 120 days, targeting premium market prices with guaranteed buyers lined up for immediate purchase upon harvest completion.",
     farmer: "Kwame Asante",
     location: "Ashanti, Ghana",
-    goal: 5000,
-    raised: 3200,
+    goal: 3500,
+    raised: 2800,
     status: "funding",
-    deadline: "2024-02-15",
-    minInvestment: 50,
-    expectedROI: 15,
+    deadline: "2025-12-15",
+    minInvestment: 25,
+    expectedROI: 18,
     riskLevel: "Medium",
   };
 
@@ -93,7 +93,7 @@ const InvestPage = () => {
         <div className="max-w-6xl mx-auto flex justify-between items-center">
           <Link href="/" className="flex items-center gap-3">
             <span className="text-2xl">🌱</span>
-            <span className="text-xl font-bold">FarmLink</span>
+            <span className="text-xl font-bold">CultiVest</span>
           </Link>
           <nav className="flex gap-6">
             <Link href="/projects" className="text-gray-600 hover:text-black">

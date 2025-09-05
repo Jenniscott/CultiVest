@@ -14,22 +14,22 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white text-black">
+    <div className="min-h-screen bg-[url('/image.png')] bg-cover bg-no-repeat text-black">
       {/* Header */}
-      <div className="border-b border-gray-200 px-4 py-4">
+      <div className=" px-4 py-4 backdrop-blur-md  text-white">
         <div className="max-w-6xl mx-auto flex justify-between items-center">
           <div className="flex items-center gap-3">
             <span className="text-2xl">🌱</span>
-            <span className="text-xl font-bold text-black">FarmLink</span>
+            <span className="text-xl font-bold">CultiVest</span>
           </div>
-          <nav className="flex gap-6">
-            <Link href="/projects" className="text-gray-600 hover:text-black">
+          <nav className="flex gap-6 text-white">
+            <Link href="/projects" className="">
               Projects
             </Link>
-            <Link href="/farmer" className="text-gray-600 hover:text-black">
+            <Link href="/farmer" className="text-white font-medium">
               Farmer
             </Link>
-            <Link href="/investor" className="text-gray-600 hover:text-black">
+            <Link href="/investor" className="text-white font-medium">
               Investor
             </Link>
           </nav>
@@ -38,14 +38,14 @@ const Home = () => {
 
       {/* Hero Section */}
       <div className="max-w-6xl mx-auto px-4 py-16 text-center">
-        <h1 className="text-5xl font-bold mb-4 text-black">🌱 FarmLink</h1>
-        <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+        <h1 className="text-5xl font-bold mb-4 text-white">🌱 CultiVest</h1>
+        <p className="text-[32px] text-white mb-8 max-w-2xl mx-auto">
           Agricultural Investment Platform - Connect vetted farmers with global investors for sustainable agricultural
           projects.
         </p>
 
         {/* Login Form */}
-        <div className="max-w-md mx-auto bg-gray-50 p-8 rounded-lg">
+        <div className="max-w-md mx-auto backdrop-blur-xl p-8 rounded-xl text-white/80">
           <h2 className="text-2xl font-bold mb-6">Get Started</h2>
 
           <div className="mb-4">
@@ -59,7 +59,7 @@ const Home = () => {
           </div>
 
           <div className="mb-6">
-            <p className="text-sm font-medium text-gray-700 mb-3">I am a:</p>
+            <p className="text-sm font-medium mb-3">I am a:</p>
             <div className="flex gap-4">
               <button
                 className={`flex-1 px-4 py-3 rounded-md border ${
@@ -91,37 +91,6 @@ const Home = () => {
       </div>
 
       {/* How it Works */}
-      <div className="bg-gray-50 py-16">
-        <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">How FarmLink Works</h2>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="text-4xl mb-4">🌱</div>
-              <h3 className="text-xl font-bold mb-2">1. Farmers Apply</h3>
-              <p className="text-gray-600">
-                Farmers submit project proposals with detailed plans and funding requirements
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="text-4xl mb-4">🔍</div>
-              <h3 className="text-xl font-bold mb-2">2. Verification</h3>
-              <p className="text-gray-600">
-                Projects undergo vetting including farmer credentials and project viability
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="text-4xl mb-4">💰</div>
-              <h3 className="text-xl font-bold mb-2">3. Investment</h3>
-              <p className="text-gray-600">
-                Verified projects receive funding and progress is tracked through milestones
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };

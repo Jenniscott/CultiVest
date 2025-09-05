@@ -19,7 +19,7 @@ export const HeaderMinimal = () => {
         <Link href="/" className="flex items-center gap-3">
           <span className="text-2xl">🌱</span>
           <div>
-            <span className="font-bold leading-tight text-xl text-black">FarmLink</span>
+            <span className="font-bold leading-tight text-xl text-black">CultiVest</span>
             <div className="text-xs text-gray-600">Agricultural Financing</div>
           </div>
         </Link>

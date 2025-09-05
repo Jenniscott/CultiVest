@@ -12,7 +12,7 @@ export const Footer = () => {
           <div className="flex flex-col md:flex-row items-center gap-4 text-sm">
             <div className="flex items-center gap-2">
               <span className="text-2xl">🌱</span>
-              <span className="font-bold text-black">FarmLink</span>
+              <span className="font-bold text-black">CultiVest</span>
             </div>
             <p className="text-gray-600 text-center md:text-left">
               Connecting farmers with global investors for sustainable agriculture
