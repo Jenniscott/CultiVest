@@ -18,7 +18,7 @@ const FarmerDashboard = () => {
   // Mock user verification status - in real app this would come from backend
   const [vettingStatus, setVettingStatus] = useState<"none" | "pending" | "approved">("none");
 
-  // Mock data - only show projects if farmer is verified - realistic 3-6 month projects
+  // Mock data - only show projects if farmer is verified - realistic 3-6 month projects with livestock
   const [projects] = useState<FarmerProject[]>(
     vettingStatus === "approved"
       ? [
@@ -34,13 +34,23 @@ const FarmerDashboard = () => {
           },
           {
             id: "2",
-            title: "Dry Season Tomato Production (90 Days)",
-            description: "High-value tomato farming during dry season using drip irrigation",
-            goal: 4200,
-            raised: 4200,
+            title: "Broiler Chicken Farm (70 Days)",
+            description: "Fast-growing broiler chickens from chicks to market weight in 10 weeks",
+            goal: 4500,
+            raised: 4500,
             status: "in-progress",
             milestones: 3,
-            completedMilestones: 1,
+            completedMilestones: 2,
+          },
+          {
+            id: "3",
+            title: "Layer Chicken Egg Production (120 Days)",
+            description: "Point-of-lay hens for immediate egg production targeting local markets",
+            goal: 3600,
+            raised: 2900,
+            status: "funding",
+            milestones: 4,
+            completedMilestones: 0,
           },
         ]
       : [],

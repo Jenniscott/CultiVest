@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { PopupMessage, usePopupMessage } from "~~/components/PopupMessage";
 
 interface ProjectData {
   id: string;
@@ -24,21 +25,22 @@ const InvestPage = () => {
   const projectId = params?.id as string;
   const [investmentAmount, setInvestmentAmount] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { popup, showSuccess, showError, closePopup } = usePopupMessage();
 
   // Mock project data - in real app this would be fetched from API
   const project: ProjectData = {
     id: projectId,
-    title: "Short-Season Maize Cultivation (120 Days)",
+    title: "Broiler Chicken Farm (70 Days)",
     description:
-      "Fast-growing maize variety cultivation for a complete 4-month cycle in Ashanti Region, Ghana. This quick-turnaround project uses hybrid seeds that mature in exactly 120 days, targeting premium market prices with guaranteed buyers lined up for immediate purchase upon harvest completion.",
+      "Fast-track poultry project raising broiler chickens from day-old chicks to market weight in exactly 10 weeks. Using modern poultry management in climate-controlled housing with automated systems. Targeting 2,000 broilers with 95% survival rate and 2.5kg average weight, with secured purchase agreements from local restaurants and retail outlets.",
     farmer: "Kwame Asante",
-    location: "Ashanti, Ghana",
-    goal: 3500,
-    raised: 2800,
+    location: "Western Region, Ghana",
+    goal: 4500,
+    raised: 3600,
     status: "funding",
-    deadline: "2025-12-15",
-    minInvestment: 25,
-    expectedROI: 18,
+    deadline: "2025-11-30",
+    minInvestment: 50,
+    expectedROI: 20,
     riskLevel: "Medium",
   };
 
@@ -50,12 +52,12 @@ const InvestPage = () => {
     const amount = parseFloat(investmentAmount);
 
     if (amount < project.minInvestment) {
-      alert(`Minimum investment is $${project.minInvestment}`);
+      showError("Investment Too Low", `Minimum investment is $${project.minInvestment}`);
       return;
     }
 
     if (amount > remaining) {
-      alert(`Cannot invest more than remaining amount: $${remaining}`);
+      showError("Investment Too High", `Cannot invest more than remaining amount: $${remaining}`);
       return;
     }
 
@@ -72,11 +74,13 @@ const InvestPage = () => {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 2000));
 
-      alert(`Investment successful! You have invested $${amount} in ${project.title}`);
-      window.location.href = "/investor";
+      showSuccess("Investment Successful!", `You have invested $${amount} in ${project.title}`);
+      setTimeout(() => {
+        window.location.href = "/investor";
+      }, 2000);
     } catch (error) {
       console.error("Investment error:", error);
-      alert("Investment failed. Please try again.");
+      showError("Investment Failed", "Investment failed. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -283,6 +287,13 @@ const InvestPage = () => {
           </div>
         </div>
       </div>
+      <PopupMessage
+        type={popup.type}
+        title={popup.title}
+        message={popup.message}
+        isVisible={popup.isVisible}
+        onClose={closePopup}
+      />
     </div>
   );
 };

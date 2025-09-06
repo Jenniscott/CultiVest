@@ -10,6 +10,7 @@ import {
   ExclamationTriangleIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";
+import { PopupMessage, usePopupMessage } from "~~/components/PopupMessage";
 // import { useParams, useRouter } from "next/navigation";
 // import { useAccount } from "wagmi";
 import { useAccount, useParams, useRouter } from "~~/hooks/mockHooks";
@@ -48,46 +49,47 @@ const ProjectDetailPage = () => {
   const [investmentAmount, setInvestmentAmount] = useState("");
   const [isInvesting, setIsInvesting] = useState(false);
   const [showInvestmentForm, setShowInvestmentForm] = useState(false);
+  const { popup, showSuccess, showError, closePopup } = usePopupMessage();
 
   // Mock project data - in real app, fetch based on ID - realistic short-term farming project
   const project: Project = {
     id: id as string,
-    title: "Short-Season Maize Cultivation (120 Days)",
+    title: "Broiler Chicken Farm (70 Days)",
     description:
-      "This fast-track maize farming project focuses on cultivating high-yield, early-maturing maize varieties in the fertile soils of Ashanti Region, Ghana. The project spans exactly 4 months from planting to harvest, using hybrid seeds that mature in 120 days. Our approach combines modern agricultural techniques with sustainable practices to achieve a target yield of 5 tons per hectare. The project includes land preparation, hybrid seed procurement, organic fertilizer application, pest management, and harvest operations. We have secured purchase agreements with local grain traders and food processors, ensuring immediate market access upon harvest completion.",
+      "This fast-track poultry project focuses on raising broiler chickens from day-old chicks to market weight in exactly 10 weeks (70 days). Using modern poultry management techniques in climate-controlled housing with automated feeding and watering systems. The project targets 2,000 broilers with an expected survival rate of 95% and average weight of 2.5kg per bird. We have secured purchase agreements with local restaurants, hotels, and retail outlets, ensuring immediate market access upon completion. The project includes chick procurement, feed, veterinary care, and housing maintenance.",
     farmer: "0x1234...5678",
-    farmerENS: "kwame.CultiVest.eth",
-    goal: 3500,
-    raised: 2800,
-    investorCount: 14,
-    deadline: "2025-12-15",
-    seasonStartDate: "2025-09-15",
+    farmerENS: "kwame.farmlink.eth",
+    goal: 4500,
+    raised: 3600,
+    investorCount: 18,
+    deadline: "2025-11-30",
+    seasonStartDate: "2025-09-20",
     status: "funding",
-    category: "maize",
-    location: "Ashanti Region, Ghana",
+    category: "poultry",
+    location: "Western Region, Ghana",
     milestones: [
       {
         id: 1,
-        description: "Land preparation and hybrid seed planting (Days 1-21)",
+        description: "Chick procurement and brooding setup (Days 1-14)",
         percentage: 30,
         status: "pending",
       },
       {
         id: 2,
-        description: "Mid-season fertilizer application and pest control (Days 22-70)",
-        percentage: 35,
+        description: "Growth phase management and feeding (Days 15-56)",
+        percentage: 45,
         status: "pending",
       },
       {
         id: 3,
-        description: "Harvest operations and drying (Days 71-120)",
-        percentage: 25,
+        description: "Finishing phase and market preparation (Days 57-70)",
+        percentage: 20,
         status: "pending",
       },
       {
         id: 4,
-        description: "Marketing and sales to guaranteed buyers",
-        percentage: 10,
+        description: "Processing and sales to guaranteed buyers",
+        percentage: 5,
         status: "pending",
       },
     ],
@@ -95,7 +97,7 @@ const ProjectDetailPage = () => {
 
   const handleInvestment = async () => {
     if (!investmentAmount || parseFloat(investmentAmount) <= 0) {
-      alert("Please enter a valid investment amount");
+      showError("Invalid Amount", "Please enter a valid investment amount");
       return;
     }
 
@@ -107,12 +109,12 @@ const ProjectDetailPage = () => {
       // In real implementation, this would call the smart contract
       await new Promise(resolve => setTimeout(resolve, 2000));
 
-      alert(`Successfully invested $${investmentAmount} in ${project.title}`);
+      showSuccess("Investment Successful!", `Successfully invested $${investmentAmount} in ${project.title}`);
       setShowInvestmentForm(false);
       setInvestmentAmount("");
     } catch (error) {
       console.error("Investment failed:", error);
-      alert("Investment failed. Please try again.");
+      showError("Investment Failed", "Investment failed. Please try again.");
     } finally {
       setIsInvesting(false);
     }
@@ -354,6 +356,13 @@ const ProjectDetailPage = () => {
           </div>
         </div>
       </div>
+      <PopupMessage
+        type={popup.type}
+        title={popup.title}
+        message={popup.message}
+        isVisible={popup.isVisible}
+        onClose={closePopup}
+      />
     </div>
   );
 };
