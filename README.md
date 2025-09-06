@@ -1,80 +1,144 @@
-# 🏗 Scaffold-ETH 2
+# � CultiVest
 
-<h4 align="center">
-  <a href="https://docs.scaffoldeth.io">Documentation</a> |
-  <a href="https://scaffoldeth.io">Website</a>
-</h4>
+> **Decentralized Agriculture Investment Platform**
 
-🧪 An open-source, up-to-date toolkit for building decentralized applications (dapps) on the Ethereum blockchain. It's designed to make it easier for developers to create and deploy smart contracts and build user interfaces that interact with those contracts.
+CultiVest is a blockchain-based platform that connects investors with farmers for quick-cycle agricultural projects (60-120 days). Built with Next.js, TypeScript, and smart contracts on Ethereum.
 
-⚙️ Built using NextJS, RainbowKit, Foundry, Wagmi, Viem, and Typescript.
+## 🚀 Features
 
-- ✅ **Contract Hot Reload**: Your frontend auto-adapts to your smart contract as you edit it.
-- 🪝 **[Custom hooks](https://docs.scaffoldeth.io/hooks/)**: Collection of React hooks wrapper around [wagmi](https://wagmi.sh/) to simplify interactions with smart contracts with typescript autocompletion.
-- 🧱 [**Components**](https://docs.scaffoldeth.io/components/): Collection of common web3 components to quickly build your frontend.
-- 🔥 **Burner Wallet & Local Faucet**: Quickly test your application with a burner wallet and local faucet.
-- 🔐 **Integration with Wallet Providers**: Connect to different wallet providers and interact with the Ethereum network.
+- **Farmer Verification**: Complete KYC process for farmer onboarding
+- **Project Creation**: Farmers can create time-bound agricultural projects
+- **Investment Marketplace**: Investors can browse and fund projects
+- **Milestone Tracking**: Project progress tracking with milestone-based fund release
+- **Returns Management**: Automated return calculations and distributions
+- **Demo Mode**: Full demonstration capabilities without blockchain interaction
 
-![Debug Contracts tab](https://github.com/scaffold-eth/scaffold-eth-2/assets/55535804/b237af0c-5027-4849-a5c1-2e31495cccb1)
+## 📋 Prerequisites
 
-## Requirements
+Before running the application, ensure you have:
 
-Before you begin, you need to install the following tools:
+- [Node.js](https://nodejs.org/) (version 18 or higher)
+- [Yarn](https://yarnpkg.com/) package manager
+- [Git](https://git-scm.com/)
 
-- [Node (>= v20.18.3)](https://nodejs.org/en/download/)
-- Yarn ([v1](https://classic.yarnpkg.com/en/docs/install/) or [v2+](https://yarnpkg.com/getting-started/install))
-- [Git](https://git-scm.com/downloads)
+## 🏃‍♂️ Quick Start - Frontend Only
 
-## Quickstart
+Follow these steps to run the CultiVest frontend application:
 
-To get started with Scaffold-ETH 2, follow the steps below:
-
-1. Install dependencies if it was skipped in CLI:
-
+### 1. Clone the Repository
+```bash
+git clone https://github.com/Jenniscott/CultiVest.git
+cd CultiVest
 ```
-cd my-dapp-example
+
+### 2. Install Dependencies
+```bash
+# Install dependencies for the Next.js frontend
+cd packages/nextjs
 yarn install
 ```
 
-2. Run a local network in the first terminal:
-
-```
-yarn chain
-```
-
-This command starts a local Ethereum network using Foundry. The network runs on your local machine and can be used for testing and development. You can customize the network configuration in `packages/foundry/foundry.toml`.
-
-3. On a second terminal, deploy the test contract:
-
-```
-yarn deploy
+### 3. Start the Development Server
+```bash
+# Start the Next.js development server
+yarn dev
 ```
 
-This command deploys a test smart contract to the local network. The contract is located in `packages/foundry/contracts` and can be modified to suit your needs. The `yarn deploy` command uses the deploy script located in `packages/foundry/script` to deploy the contract to the network. You can also customize the deploy script.
+### 4. Open the Application
+Visit [http://localhost:3000](http://localhost:3000) in your browser to access CultiVest.
 
-4. On a third terminal, start your NextJS app:
+## 🎭 Demo Features
 
+The application runs in full demo mode by default, allowing you to:
+
+### For Farmers:
+- **Complete Verification Flow**: `/farmer/verify`
+  - Fill out farmer verification form
+  - Upload documents (any files work for demo)
+  - Watch status change from "Form" → "Pending" → "Verified"
+- **Create Projects**: `/farmer/create-project`
+  - Set up quick-cycle agricultural projects
+  - Define milestones and funding goals
+- **Manage Projects**: View and track project progress
+
+### For Investors:
+- **Browse Projects**: `/projects`
+  - View available investment opportunities
+  - Filter by project type and status
+- **Invest in Projects**: Click on any project to invest
+  - Make investments with demo calculations
+  - Track portfolio performance
+- **Withdraw Returns**: `/investor/withdrawals`
+  - View completed projects and returns
+  - Process withdrawal requests
+
+### Demo Reset:
+- Use the "Reset Demo" buttons available in various sections
+- Clear localStorage to restart demo flows
+- Debug buttons allow testing different states
+
+## 📱 Main Routes
+
+- **Homepage**: `/` - Platform overview and navigation
+- **Projects**: `/projects` - Browse all investment opportunities
+- **Farmer Dashboard**: `/farmer` - Farmer project management
+- **Investor Dashboard**: `/investor` - Investment portfolio
+- **Verification**: `/farmer/verify` - Farmer verification process
+
+## 🛠 Development
+
+### Project Structure
 ```
-yarn start
+packages/nextjs/
+├── app/                    # Next.js app router pages
+│   ├── farmer/            # Farmer-related pages
+│   ├── investor/          # Investor-related pages
+│   ├── projects/          # Project browsing and details
+│   └── ...
+├── components/            # Reusable UI components
+├── hooks/                 # Custom React hooks
+└── styles/               # Global styles
 ```
 
-Visit your app on: `http://localhost:3000`. You can interact with your smart contract using the `Debug Contracts` page. You can tweak the app config in `packages/nextjs/scaffold.config.ts`.
+### Key Features Implemented
+- ✅ Complete farmer verification workflow
+- ✅ Project creation and management
+- ✅ Investment flow and tracking
+- ✅ Returns calculation and withdrawal
+- ✅ Responsive design for all devices
+- ✅ Demo mode with realistic data
+- ✅ localStorage persistence for demo states
 
-Run smart contract test with `yarn foundry:test`
+### Environment Setup
+The application runs in demo mode by default. No additional environment configuration is needed for frontend-only operation.
 
-- Edit your smart contracts in `packages/foundry/contracts`
-- Edit your frontend homepage at `packages/nextjs/app/page.tsx`. For guidance on [routing](https://nextjs.org/docs/app/building-your-application/routing/defining-routes) and configuring [pages/layouts](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts) checkout the Next.js documentation.
-- Edit your deployment scripts in `packages/foundry/script`
+## 🎯 Demo Scenarios
 
+### Complete Farmer Journey:
+1. Visit `/farmer/verify`
+2. Click "Fill Sample Data" for quick setup
+3. Submit verification form
+4. Watch automatic progression: Pending → Verified
+5. Create your first project at `/farmer/create-project`
 
-## Documentation
+### Complete Investor Journey:
+1. Visit `/projects` to browse opportunities
+2. Click on any project to view details
+3. Click "Invest Now" to make an investment
+4. View your portfolio at `/investor`
+5. Check returns at `/investor/withdrawals`
 
-Visit our [docs](https://docs.scaffoldeth.io) to learn how to start building with Scaffold-ETH 2.
+## 📝 Notes
 
-To know more about its features, check out our [website](https://scaffoldeth.io).
+- All data is mocked for demonstration purposes
+- Smart contract integration is abstracted for demo mode
+- Real blockchain functionality would require additional setup
+- The platform is designed for quick-cycle agricultural projects (60-120 days)
 
-## Contributing to Scaffold-ETH 2
+## 🤝 Contributing
 
-We welcome contributions to Scaffold-ETH 2!
+This project is built on Scaffold-ETH 2 framework. For development guidelines and contribution information, please refer to the development documentation.
 
-Please see [CONTRIBUTING.MD](https://github.com/scaffold-eth/scaffold-eth-2/blob/main/CONTRIBUTING.md) for more information and guidelines for contributing to Scaffold-ETH 2.
+---
+
+**Built with:** Next.js • TypeScript • Tailwind CSS • React • Scaffold-ETH 2
