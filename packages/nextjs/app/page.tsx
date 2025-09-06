@@ -1,15 +1,72 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useAuth } from "~~/contexts/AuthContext";
+import { useImmediateRedirect } from "~~/hooks/useRedirect";
 
 const Home = () => {
   const [email, setEmail] = useState("");
   const [selectedRole, setSelectedRole] = useState<"farmer" | "investor" | null>(null);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleLogin = () => {
-    if (selectedRole && email) {
-      window.location.href = `/${selectedRole}`;
+  const { login, isAuthenticated, user, isLoading } = useAuth();
+  const { redirectToRole } = useImmediateRedirect();
+
+  // Redirect authenticated users to their dashboard
+  useEffect(() => {
+    if (!isLoading && isAuthenticated && user?.role) {
+      // Use optimized redirect hook for instant navigation
+      redirectToRole(user.role);
+    }
+  }, [isAuthenticated, user, isLoading, redirectToRole]);
+
+  // Show loading state while checking authentication
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-[url('/image.png')] bg-cover bg-no-repeat flex items-center justify-center">
+        <div className="text-center text-white">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
+          <p>Checking authentication...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show loading state while logging in
+  if (isLoggingIn) {
+    return (
+      <div className="min-h-screen bg-[url('/image.png')] bg-cover bg-no-repeat flex items-center justify-center">
+        <div className="text-center text-white">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
+          <p>Logging you in...</p>
+        </div>
+      </div>
+    );
+  }
+
+  const handleLogin = async () => {
+    if (!selectedRole || !email) {
+      setError("Please select a role and enter your email");
+      return;
+    }
+
+    setIsLoggingIn(true);
+    setError("");
+
+    try {
+      const success = await login(email, selectedRole);
+      if (success) {
+        // Use optimized redirect for instant navigation
+        redirectToRole(selectedRole);
+      } else {
+        setError("Login failed. Please try again.");
+      }
+    } catch (err) {
+      setError("An error occurred during login. Please try again.");
+    } finally {
+      setIsLoggingIn(false);
     }
   };
 
@@ -62,17 +119,15 @@ const Home = () => {
             <p className="text-sm font-medium mb-3">I am a:</p>
             <div className="flex gap-4">
               <button
-                className={`flex-1 px-4 py-3 rounded-md border ${
-                  selectedRole === "farmer" ? "bg-black text-white border-black" : "border-gray-300 hover:bg-gray-100"
-                }`}
+                className={`flex-1 px-4 py-3 rounded-md border ${selectedRole === "farmer" ? "bg-black text-white border-black" : "border-gray-300 hover:bg-gray-100"
+                  }`}
                 onClick={() => setSelectedRole("farmer")}
               >
                 Farmer
               </button>
               <button
-                className={`flex-1 px-4 py-3 rounded-md border ${
-                  selectedRole === "investor" ? "bg-black text-white border-black" : "border-gray-300 hover:bg-gray-100"
-                }`}
+                className={`flex-1 px-4 py-3 rounded-md border ${selectedRole === "investor" ? "bg-black text-white border-black" : "border-gray-300 hover:bg-gray-100"
+                  }`}
                 onClick={() => setSelectedRole("investor")}
               >
                 Investor
@@ -80,12 +135,18 @@ const Home = () => {
             </div>
           </div>
 
+          {error && (
+            <div className="mb-4 p-3 bg-red-100 border border-red-300 rounded-md text-red-700 text-sm">
+              {error}
+            </div>
+          )}
+
           <button
             onClick={handleLogin}
-            disabled={!email || !selectedRole}
-            className="w-full bg-black text-white py-3 px-4 rounded-md hover:bg-gray-800 disabled:bg-gray-300"
+            disabled={!email || !selectedRole || isLoggingIn}
+            className="w-full bg-black text-white py-3 px-4 rounded-md hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
-            Continue
+            {isLoggingIn ? "Logging in..." : "Continue"}
           </button>
         </div>
       </div>
