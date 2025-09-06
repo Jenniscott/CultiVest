@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { PopupMessage, usePopupMessage } from "~~/components/PopupMessage";
 
 interface Milestone {
   id: string;
@@ -11,6 +12,7 @@ interface Milestone {
 
 const CreateProject = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { popup, showSuccess, showError, closePopup } = usePopupMessage();
 
   const [projectData, setProjectData] = useState({
     title: "",
@@ -63,7 +65,7 @@ const CreateProject = () => {
     e.preventDefault();
 
     if (getTotalPercentage() !== 100) {
-      alert("Milestone percentages must total exactly 100%");
+      showError("Invalid Milestones", "Milestone percentages must total exactly 100%");
       return;
     }
 
@@ -79,13 +81,16 @@ const CreateProject = () => {
       // Simulate API call delay
       await new Promise(resolve => setTimeout(resolve, 2000));
 
-      alert(
-        "Quick-cycle project created successfully! Your 60-120 day farming project will be reviewed before going live.",
+      showSuccess(
+        "Project Created!",
+        "Your quick-cycle farming project has been created successfully and will be reviewed before going live.",
       );
-      window.location.href = "/farmer";
+      setTimeout(() => {
+        window.location.href = "/farmer";
+      }, 2000);
     } catch (error) {
       console.error("Error creating project:", error);
-      alert("Error creating project. Please try again.");
+      showError("Creation Failed", "Error creating project. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -162,7 +167,7 @@ const CreateProject = () => {
 
               <div>
                 <label htmlFor="cropType" className="block text-sm font-medium text-gray-700 mb-2">
-                  🌱 Crop Type *
+                  🌱 Project Type *
                 </label>
                 <select
                   id="cropType"
@@ -172,19 +177,39 @@ const CreateProject = () => {
                   onChange={handleInputChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black focus:border-black"
                 >
-                  <option value="">Select crop type for quick harvest</option>
-                  <option value="maize">Maize (Short-Season)</option>
-                  <option value="tomato">Tomato</option>
-                  <option value="leafy-greens">Leafy Greens</option>
-                  <option value="sweet-potato">Sweet Potato</option>
-                  <option value="pepper">Pepper & Chili</option>
-                  <option value="mushroom">Mushroom</option>
-                  <option value="cassava">Cassava (Quick Varieties)</option>
-                  <option value="vegetables">Mixed Vegetables</option>
-                  <option value="herbs">Herbs & Spices</option>
-                  <option value="other">Other (60-120 day cycle)</option>
+                  <option value="">Select project type for quick cycle</option>
+                  <optgroup label="🌾 Crop Farming">
+                    <option value="maize">Maize (Short-Season)</option>
+                    <option value="tomato">Tomato</option>
+                    <option value="leafy-greens">Leafy Greens</option>
+                    <option value="sweet-potato">Sweet Potato</option>
+                    <option value="pepper">Pepper & Chili</option>
+                    <option value="mushroom">Mushroom</option>
+                    <option value="vegetables">Mixed Vegetables</option>
+                    <option value="herbs">Herbs & Spices</option>
+                  </optgroup>
+                  <optgroup label="🐔 Poultry">
+                    <option value="broiler-chicken">Broiler Chickens (70 days)</option>
+                    <option value="layer-chicken">Layer Chickens (Egg Production)</option>
+                    <option value="turkey">Turkey Farming</option>
+                    <option value="duck">Duck Farming</option>
+                  </optgroup>
+                  <optgroup label="🐷 Livestock">
+                    <option value="pig-fattening">Pig Fattening (90 days)</option>
+                    <option value="goat-breeding">Goat Breeding/Fattening</option>
+                    <option value="sheep-farming">Sheep Farming</option>
+                    <option value="rabbit-farming">Rabbit Farming</option>
+                  </optgroup>
+                  <optgroup label="🐄 Dairy & Other">
+                    <option value="dairy-cattle">Dairy Cattle (Short-term)</option>
+                    <option value="fish-farming">Fish Farming (Aquaculture)</option>
+                    <option value="snail-farming">Snail Farming</option>
+                    <option value="other">Other (60-120 day cycle)</option>
+                  </optgroup>
                 </select>
-                <p className="text-xs text-gray-500 mt-1">Only fast-maturing crops suitable for short cycles</p>
+                <p className="text-xs text-gray-500 mt-1">
+                  Choose crops or livestock suitable for short cycles (60-120 days)
+                </p>
               </div>
 
               <div className="grid md:grid-cols-2 gap-4">
@@ -269,7 +294,7 @@ const CreateProject = () => {
 
                 <div>
                   <label htmlFor="seasonStartDate" className="block text-sm font-medium text-gray-700 mb-2">
-                    📅 Project Start *
+                    📅 Season Start *
                   </label>
                   <input
                     type="date"
@@ -407,12 +432,6 @@ const CreateProject = () => {
                 • <strong>Suitable Crops:</strong> Fast-maturing varieties only
               </p>
               <p>
-                • <strong>Timeline:</strong> Must start within 90 days of approval
-              </p>
-              <p>
-                • <strong>Updates Required:</strong> Weekly progress reports during growing cycle
-              </p>
-              <p>
                 • <strong>Market Focus:</strong> Quick-turnaround crops with existing demand
               </p>
             </div>
@@ -436,6 +455,15 @@ const CreateProject = () => {
           </div>
         </form>
       </div>
+
+      {/* Popup Message */}
+      <PopupMessage
+        type={popup.type}
+        title={popup.title}
+        message={popup.message}
+        isVisible={popup.isVisible}
+        onClose={closePopup}
+      />
     </div>
   );
 };

@@ -2,14 +2,16 @@
 
 import { useState } from "react";
 import { DocumentTextIcon, MapPinIcon, PhotoIcon, UserIcon } from "@heroicons/react/24/outline";
+import { PopupMessage, usePopupMessage } from "~~/components/PopupMessage";
 // import { useRouter } from "next/navigation";
 // import { useAccount } from "wagmi";
 import { useRouter } from "~~/hooks/mockHooks";
 
 const FarmerVerification = () => {
-  const isConnected = true;
+  // const isConnected = true;
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { popup, showSuccess, showError, closePopup } = usePopupMessage();
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -55,26 +57,31 @@ const FarmerVerification = () => {
       // 2. Send data to backend for verification
       // 3. Backend would vet and call smart contract
 
-      alert("Verification submitted successfully! You will be notified when the review is complete.");
-      router.push("/farmer");
+      showSuccess(
+        "Verification Submitted!",
+        "Your verification has been submitted successfully. You will be notified when the review is complete.",
+      );
+      setTimeout(() => {
+        router.push("/farmer");
+      }, 2000);
     } catch (error) {
       console.error("Error submitting verification:", error);
-      alert("Error submitting verification. Please try again.");
+      showError("Submission Failed", "Error submitting verification. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  if (!isConnected) {
-    return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-black mb-4">Connect Your Wallet</h1>
-          <p className="text-gray-600">Please connect your wallet to access farmer verification</p>
-        </div>
-      </div>
-    );
-  }
+  // if (!isConnected) {
+  //   return (
+  //     <div className="min-h-screen bg-white flex items-center justify-center">
+  //       <div className="text-center">
+  //         <h1 className="text-2xl font-bold text-black mb-4">Connect Your Wallet</h1>
+  //         <p className="text-gray-600">Please connect your wallet to access farmer verification</p>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="min-h-screen bg-white text-black">
@@ -94,12 +101,12 @@ const FarmerVerification = () => {
                 <li>• Land ownership/lease document (Required)</li>
                 <li>• Recent farm photos (Required)</li>
                 <li>• Bank statement (last 6 months) (Required)</li>
+                <li>• Business/cooperative registration</li>
               </ul>
             </div>
             <div>
               <h3 className="font-medium text-gray-800 mb-2">📄 Additional Documents</h3>
               <ul className="space-y-1">
-                <li>• Business/cooperative registration</li>
                 <li>• Agricultural certificates/training</li>
               </ul>
             </div>
@@ -288,40 +295,40 @@ const FarmerVerification = () => {
             </div>
           </div>
 
+          <div>
+            <label htmlFor="businessRegistration" className="block text-sm font-medium text-gray-700 mb-2">
+              <DocumentTextIcon className="h-4 w-4 inline mr-2" />
+              Business/Cooperative Registration
+            </label>
+            <div className="border-2 border-dashed border-gray-200 rounded-lg p-4 text-center hover:border-gray-300 transition-colors">
+              <input
+                type="file"
+                id="businessRegistration"
+                name="businessRegistration"
+                onChange={handleFileChange("businessRegistration")}
+                accept=".pdf,.jpg,.jpeg,.png"
+                className="hidden"
+              />
+              <label htmlFor="businessRegistration" className="cursor-pointer flex flex-col items-center">
+                <DocumentTextIcon className="h-6 w-6 text-gray-400 mb-2" />
+                {formData.businessRegistration ? (
+                  <div>
+                    <p className="text-sm font-medium text-black">{formData.businessRegistration.name}</p>
+                    <p className="text-xs text-gray-500">Click to change file</p>
+                  </div>
+                ) : (
+                  <div>
+                    <p className="text-sm text-gray-700">Upload Business Registration</p>
+                    <p className="text-xs text-gray-500">If you have a registered farming business</p>
+                  </div>
+                )}
+              </label>
+            </div>
+          </div>
+
           <div className="border-t border-gray-200 pt-6">
             <h3 className="text-lg font-medium text-gray-900 mb-4">📄 Additional Documents (Optional)</h3>
             <div className="space-y-4">
-              <div>
-                <label htmlFor="businessRegistration" className="block text-sm font-medium text-gray-700 mb-2">
-                  <DocumentTextIcon className="h-4 w-4 inline mr-2" />
-                  Business/Cooperative Registration
-                </label>
-                <div className="border-2 border-dashed border-gray-200 rounded-lg p-4 text-center hover:border-gray-300 transition-colors">
-                  <input
-                    type="file"
-                    id="businessRegistration"
-                    name="businessRegistration"
-                    onChange={handleFileChange("businessRegistration")}
-                    accept=".pdf,.jpg,.jpeg,.png"
-                    className="hidden"
-                  />
-                  <label htmlFor="businessRegistration" className="cursor-pointer flex flex-col items-center">
-                    <DocumentTextIcon className="h-6 w-6 text-gray-400 mb-2" />
-                    {formData.businessRegistration ? (
-                      <div>
-                        <p className="text-sm font-medium text-black">{formData.businessRegistration.name}</p>
-                        <p className="text-xs text-gray-500">Click to change file</p>
-                      </div>
-                    ) : (
-                      <div>
-                        <p className="text-sm text-gray-700">Upload Business Registration</p>
-                        <p className="text-xs text-gray-500">If you have a registered farming business</p>
-                      </div>
-                    )}
-                  </label>
-                </div>
-              </div>
-
               <div>
                 <label htmlFor="agriculturalCertificate" className="block text-sm font-medium text-gray-700 mb-2">
                   <DocumentTextIcon className="h-4 w-4 inline mr-2" />
@@ -356,7 +363,6 @@ const FarmerVerification = () => {
           </div>
 
           <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-            <h3 className="text-sm font-medium text-yellow-800 mb-2">Enhanced Verification Process</h3>
             <ul className="text-sm text-yellow-700 space-y-1">
               <li>1. Submit all required documents and information</li>
               <li>2. Our agricultural experts review your application (2-3 business days)</li>
@@ -384,6 +390,15 @@ const FarmerVerification = () => {
           </div>
         </form>
       </div>
+
+      {/* Popup Message */}
+      <PopupMessage
+        type={popup.type}
+        title={popup.title}
+        message={popup.message}
+        isVisible={popup.isVisible}
+        onClose={closePopup}
+      />
     </div>
   );
 };
