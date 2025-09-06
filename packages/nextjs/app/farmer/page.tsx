@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
 interface FarmerProject {
@@ -17,6 +17,20 @@ interface FarmerProject {
 const FarmerDashboard = () => {
   // Mock user verification status - in real app this would come from backend
   const [vettingStatus, setVettingStatus] = useState<"none" | "pending" | "approved">("none");
+
+  // Load verification status from localStorage on component mount
+  useEffect(() => {
+    const savedStatus = localStorage.getItem("farmerVerificationStatus") as "none" | "pending" | "approved" | null;
+    if (savedStatus) {
+      setVettingStatus(savedStatus);
+    }
+  }, []);
+
+  // Update localStorage when status changes
+  const updateVettingStatus = (newStatus: "none" | "pending" | "approved") => {
+    setVettingStatus(newStatus);
+    localStorage.setItem("farmerVerificationStatus", newStatus);
+  };
 
   // Mock data - only show projects if farmer is verified - realistic 3-6 month projects with livestock
   const [projects] = useState<FarmerProject[]>(
@@ -142,22 +156,22 @@ const FarmerDashboard = () => {
 
           {/* Debug buttons to test verification states */}
           <div className="mt-4 pt-4 border-t border-gray-200">
-            <p className="text-sm text-gray-500 mb-2">Debug: Test verification states</p>
+            <p className="text-sm text-gray-500 mb-2"> Verification states</p>
             <div className="flex gap-2">
               <button
-                onClick={() => setVettingStatus("none")}
+                onClick={() => updateVettingStatus("none")}
                 className="px-3 py-1 text-xs bg-red-100 text-red-800 rounded"
               >
                 Not Verified
               </button>
               <button
-                onClick={() => setVettingStatus("pending")}
+                onClick={() => updateVettingStatus("pending")}
                 className="px-3 py-1 text-xs bg-yellow-100 text-yellow-800 rounded"
               >
                 Pending
               </button>
               <button
-                onClick={() => setVettingStatus("approved")}
+                onClick={() => updateVettingStatus("approved")}
                 className="px-3 py-1 text-xs bg-green-100 text-green-800 rounded"
               >
                 Approved

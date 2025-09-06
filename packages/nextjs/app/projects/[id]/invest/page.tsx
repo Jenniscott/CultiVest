@@ -40,7 +40,7 @@ const InvestPage = () => {
     status: "funding",
     deadline: "2025-11-30",
     minInvestment: 50,
-    expectedROI: 20,
+    expectedROI: 25,
     riskLevel: "Medium",
   };
 

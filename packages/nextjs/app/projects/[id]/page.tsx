@@ -345,7 +345,7 @@ const ProjectDetailPage = () => {
 
                 <div>
                   <span className="text-gray-600 block">Expected ROI</span>
-                  <span className="text-green-600 font-medium">12-18% </span>
+                  <span className="text-green-600 font-medium">25%</span>
                 </div>
                 <div>
                   <span className="text-gray-600 block">Risk Level</span>

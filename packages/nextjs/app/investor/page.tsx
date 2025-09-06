@@ -56,7 +56,7 @@ const InvestorDashboard = () => {
       completedMilestones: 1,
       status: "in-progress",
       myInvestment: 600,
-      estimatedReturn: 780,
+      estimatedReturn: 750, // 600 * 1.25 = 750
       image: "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?w=400&h=250&fit=crop",
     },
     {
@@ -72,7 +72,7 @@ const InvestorDashboard = () => {
       completedMilestones: 0,
       status: "funding",
       myInvestment: 400,
-      estimatedReturn: 520,
+      estimatedReturn: 500, // 400 * 1.25 = 500
       image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&h=250&fit=crop",
     },
     {
@@ -120,8 +120,8 @@ const InvestorDashboard = () => {
       completedMilestones: 3,
       status: "completed",
       myInvestment: 500,
-      estimatedReturn: 650,
-      availableForWithdrawal: 650,
+      estimatedReturn: 625, // 500 * 1.25 = 625
+      availableForWithdrawal: 625,
       image: "https://images.unsplash.com/photo-1592477725143-8a3b3c0a68e6?w=400&h=250&fit=crop",
     },
     {
@@ -137,8 +137,8 @@ const InvestorDashboard = () => {
       completedMilestones: 4,
       status: "completed",
       myInvestment: 400,
-      estimatedReturn: 520,
-      availableForWithdrawal: 520,
+      estimatedReturn: 500, // 400 * 1.25 = 500
+      availableForWithdrawal: 500,
       image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400&h=250&fit=crop",
     },
   ]);
@@ -227,7 +227,7 @@ const InvestorDashboard = () => {
                 href="/investor/withdrawals"
                 className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2"
               >
-                💰 Withdraw Returns ($${totalAvailableForWithdrawal.toLocaleString()})
+                💰 Withdraw Returns (${totalAvailableForWithdrawal.toLocaleString()})
               </Link>
             )}
           </div>

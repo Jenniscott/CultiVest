@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DocumentTextIcon, MapPinIcon, PhotoIcon, UserIcon } from "@heroicons/react/24/outline";
 import { PopupMessage, usePopupMessage } from "~~/components/PopupMessage";
 // import { useRouter } from "next/navigation";
@@ -11,7 +11,34 @@ const FarmerVerification = () => {
   // const isConnected = true;
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [verificationStatus, setVerificationStatus] = useState<"form" | "pending" | "verified">("form");
   const { popup, showSuccess, showError, closePopup } = usePopupMessage();
+
+  // Load verification status on mount
+  useEffect(() => {
+    const savedStatus = localStorage.getItem("farmerVerificationStatus") as "none" | "pending" | "approved" | null;
+    if (savedStatus === "pending") {
+      setVerificationStatus("pending");
+    } else if (savedStatus === "approved") {
+      setVerificationStatus("verified");
+    }
+  }, []);
+
+  const resetDemo = () => {
+    setVerificationStatus("form");
+    localStorage.removeItem("farmerVerificationStatus");
+    setFormData({
+      fullName: "",
+      farmLocation: "",
+      bio: "",
+      governmentId: null,
+      landDocument: null,
+      farmPhotos: null,
+      businessRegistration: null,
+      agriculturalCertificate: null,
+      bankStatement: null,
+    });
+  };
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -52,22 +79,33 @@ const FarmerVerification = () => {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 2000));
 
-      // In real implementation, this would:
-      // 1. Upload document to Web3.storage/IPFS
-      // 2. Send data to backend for verification
-      // 3. Backend would vet and call smart contract
+      // Set status to pending
+      setVerificationStatus("pending");
+      localStorage.setItem("farmerVerificationStatus", "pending");
+      setIsSubmitting(false);
 
       showSuccess(
         "Verification Submitted!",
-        "Your verification has been submitted successfully. You will be notified when the review is complete.",
+        "Your verification has been submitted successfully. Processing your documents...",
       );
-      setTimeout(() => {
-        router.push("/farmer");
-      }, 2000);
+
+      // Simulate admin review process (5 seconds for demo)
+      setTimeout(async () => {
+        setVerificationStatus("verified");
+        localStorage.setItem("farmerVerificationStatus", "approved");
+        showSuccess(
+          "Verification Approved!",
+          "Congratulations! You are now a verified farmer and can create projects.",
+        );
+
+        // Auto-redirect to farmer dashboard after success
+        setTimeout(() => {
+          router.push("/farmer");
+        }, 3000);
+      }, 5000);
     } catch (error) {
       console.error("Error submitting verification:", error);
       showError("Submission Failed", "Error submitting verification. Please try again.");
-    } finally {
       setIsSubmitting(false);
     }
   };
@@ -82,6 +120,81 @@ const FarmerVerification = () => {
   //     </div>
   //   );
   // }
+
+  // Show pending status
+  if (verificationStatus === "pending") {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center max-w-md mx-auto px-4">
+          <div className="animate-spin text-6xl mb-6">⏳</div>
+          <h1 className="text-3xl font-bold text-black mb-4">Verification in Progress</h1>
+          <p className="text-gray-600 mb-6">
+            Our agricultural experts are reviewing your documents and information. This typically takes 2-3 business
+            days.
+          </p>
+          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
+            <p className="text-sm text-yellow-700">
+              <strong>Processing:</strong> We&apos;re verifying your identity, farm ownership, and agricultural
+              experience.
+            </p>
+          </div>
+          <button
+            onClick={() => router.push("/farmer")}
+            className="bg-black text-white px-6 py-3 rounded-md hover:bg-gray-800 transition-colors"
+          >
+            Return to Dashboard
+          </button>
+          <button
+            onClick={resetDemo}
+            className="ml-4 bg-gray-200 text-gray-700 px-6 py-3 rounded-md hover:bg-gray-300 transition-colors"
+          >
+            Reset Demo
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Show verified status
+  if (verificationStatus === "verified") {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center max-w-md mx-auto px-4">
+          <div className="text-6xl mb-6">✅</div>
+          <h1 className="text-3xl font-bold text-green-600 mb-4">Verification Approved!</h1>
+          <p className="text-gray-600 mb-6">
+            Congratulations! You are now a verified farmer on CultiVest. You can create and manage farming projects.
+          </p>
+          <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
+            <p className="text-sm text-green-700">
+              <strong>Next Steps:</strong> Create your first quick-cycle farming project (60-120 days) and start
+              receiving funding from investors.
+            </p>
+          </div>
+          <div className="space-y-3">
+            <button
+              onClick={() => router.push("/farmer/create-project")}
+              className="w-full bg-black text-white px-6 py-3 rounded-md hover:bg-gray-800 transition-colors"
+            >
+              Create Your First Project
+            </button>
+            <button
+              onClick={() => router.push("/farmer")}
+              className="w-full bg-white text-black border-2 border-gray-300 px-6 py-3 rounded-md hover:bg-gray-50 transition-colors"
+            >
+              Go to Dashboard
+            </button>
+            <button
+              onClick={resetDemo}
+              className="w-full bg-gray-200 text-gray-700 px-6 py-3 rounded-md hover:bg-gray-300 transition-colors"
+            >
+              Reset Demo
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white text-black">
@@ -112,6 +225,37 @@ const FarmerVerification = () => {
             </div>
           </div>
         </div>
+
+        {/* Demo Helper */}
+        {/* <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
+          <h2 className="text-lg font-semibold text-blue-800 mb-4">🎭 Demo Instructions</h2>
+          <p className="text-blue-700 text-sm mb-4">
+            For demo purposes, you can fill in sample information and upload any files. The verification process will simulate:
+          </p>
+          <ol className="text-blue-700 text-sm space-y-1 list-decimal list-inside mb-4">
+            <li>Form submission (2 seconds)</li>
+            <li>Status changes to "Pending" - documents under review</li>
+            <li>After 5 seconds, status changes to "Verified"</li>
+            <li>Auto-redirect to farmer dashboard where you can create projects</li>
+          </ol>
+          <button
+            type="button"
+            onClick={() => setFormData({
+              fullName: "John Doe",
+              farmLocation: "Ashanti Region, Ghana",
+              bio: "Experienced farmer with 10 years in sustainable agriculture. Specializes in quick-cycle crops and poultry farming.",
+              governmentId: new File([""], "id.pdf", { type: "application/pdf" }),
+              landDocument: new File([""], "land.pdf", { type: "application/pdf" }),
+              farmPhotos: new File([""], "farm.jpg", { type: "image/jpeg" }),
+              businessRegistration: new File([""], "business.pdf", { type: "application/pdf" }),
+              agriculturalCertificate: null,
+              bankStatement: new File([""], "bank.pdf", { type: "application/pdf" }),
+            })}
+            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors text-sm"
+          >
+            Fill Sample Data
+          </button>
+        </div> */}
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
